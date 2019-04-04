@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/gorilla/mux"
+	"log"
 	"net/http"
 	"strconv"
 )
@@ -14,8 +15,10 @@ type Message struct {
 func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/deserve/{userId}", func(writer http.ResponseWriter, request *http.Request) {
+		userId := mux.Vars(request)["userId"]
+		log.Printf("Does user %v deserve greetings ?", userId)
 		ret := false
-		if mux.Vars(request)["userId"] != "666" {
+		if userId != "666" {
 			ret = true
 		}
 		writer.WriteHeader(http.StatusOK)
